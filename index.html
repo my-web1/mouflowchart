@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoU Execution Flowchart - Theme 1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #38bdf8);
+            color: #1f2937;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(90deg, #38bdf8, #1e3a8a);
+            color: #facc15;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+        .header .contact-info {
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+        .header .contact-info a {
+            color: #fef08a;
+            text-decoration: none;
+        }
+        .header .contact-info a:hover {
+            text-decoration: underline;
+            color: #ffffff;
+        }
+        .flowchart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            flex: 1;
+        }
+        .flowchart-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #facc15;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .flowchart-node {
+            background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+            border: 3px solid #facc15;
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+            margin-bottom: 60px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .flowchart-node:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.4);
+        }
+        .flowchart-node i {
+            font-size: 1.6rem;
+            color: #f97316;
+        }
+        .flowchart-node p {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #f97316;
+            flex: 1;
+        }
+        .flowchart-node::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 40px;
+            background: #facc15;
+        }
+        .flowchart-node::before {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 14px solid #facc15;
+        }
+        .flowchart-node:last-child::after,
+        .flowchart-node:last-child::before {
+            display: none;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .modal-content h2 {
+            margin: 0 0 10px;
+            font-size: 1.6rem;
+            color: #38bdf8;
+        }
+        .modal-content p {
+            margin: 0 0 20px;
+            font-size: 1rem;
+            color: #1f2937;
+        }
+        .modal-content button {
+            background: #f97316;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.25s;
+        }
+        .modal-content button:hover {
+            background: #fb923c;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #38bdf8;
+            color: #facc15;
+            font-size: 0.95rem;
+        }
+        footer a {
+            color: #fef08a;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            .flowchart-node {
+                width: 90%;
+                padding: 15px;
+            }
+            .flowchart-title {
+                font-size: 2rem;
+            }
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            .header .contact-info {
+                font-size: 0.85rem;
+            }
+            .modal-content {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Dr. Sachin Ambekar's IICP</h1>
+        <div class="contact-info">
+            <p>Website: <a href="https://www.iicp.in">www.iicp.in</a> | Email: <a href="mailto:info@iicp.in">info@iicp.in</a></p>
+            <p>Contact: +919284157202 | Address: Nigdi, Pune-411044, Maharashtra, India</p>
+        </div>
+    </div>
+
+    <div class="flowchart-container">
+        <h1 class="flowchart-title">MoU Execution Flowchart</h1>
+        
+        <div class="flowchart-node" onclick="showModal('MoU Accepted by Institute', 'The institute formally agrees to the MoU terms via email confirmation, initiating the collaboration.')">
+            <i class="fas fa-file-signature"></i>
+            <p>MoU Accepted by Institute</p>
+        </div>
+        <div class="flowchart-node" onclick="showModal('Onboarding of Institute', 'The institute is integrated into IICP’s system, including setting up communication channels and infrastructure.')">
+            <i class="fas fa-user-plus"></i>
+            <p>Onboarding of Institute</p>
+        </div>
+        <div class="flowchart-node" onclick="showModal('Aptitude Test Practice', 'Students gain access to IICP’s aptitude tests to prepare for job interviews.')">
+            <i class="fas fa-brain"></i>
+            <p>Aptitude Test Practice</p>
+        </div>
+        <div class="flowchart-node" onclick="showModal('Registration for Job Alerts', 'Students register for job alerts via WhatsApp, Telegram, or email for real-time updates.')">
+            <i class="fas fa-bell"></i>
+            <p>Registration for Job Alerts<br>(WhatsApp Group, Telegram Group, Email)</p>
+        </div>
+        <div class="flowchart-node" onclick="showModal('Start Job Alerts', 'IICP begins sharing job vacancies and updates with registered students.')">
+            <i class="fas fa-bullhorn"></i>
+            <p>Start Job Alerts</p>
+        </div>
+        <div class="flowchart-node" onclick="showModal('Access to Google Classroom', 'All students are provided access to Google Classroom for learning resources.')">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <p>Access to Google Classroom for All Students</p>
+        </div>
+        <div class="flowchart-node" onclick="showModal('Live Lectures', 'IICP conducts live sessions on soft skills and industry readiness, scheduled mutually.')">
+            <i class="fas fa-video"></i>
+            <p>Live Lectures<br>(As per Mutual Decision and Convenience)</p>
+        </div>
+        <div class="flowchart-node" onclick="showModal('Resume Building', 'IICP assists students in creating professional resumes tailored for interviews.')">
+            <i class="fas fa-file-alt"></i>
+            <p>Resume Building from Interview Point of View</p>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <p id="modal-description"></p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Created by Dr. Sachin Ambekar's IICP | <a href="https://www.iicp.in">www.iicp.in</a></p>
+    </footer>
+
+    <script>
+        function showModal(title, description) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-description').textContent = description;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
